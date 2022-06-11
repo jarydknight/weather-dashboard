@@ -21,6 +21,11 @@ const getCoordinates = (location) => {
         };
         getWeather(coordinate);
     }))
+};
+
+const unixToDate = (unixTime) => {
+    const date = moment.unix(unixTime).format("dddd MMMM Do, YYYY");
+    return date;
 }
 
 
