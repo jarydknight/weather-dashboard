@@ -12,6 +12,7 @@ const getWeather = (coordinate) => {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinate.lat}&lon=${coordinate.long}&units=metric&exclude=minutely,hourly,alerts&appid=${apiKey}`).then(res => {
         res.json()
         .then(data => {
+            // Store data from API call in object to be passed to rendering function
             let weatherData = {
                 current: {
                     temp: data.current.temp,
@@ -41,13 +42,20 @@ const getCoordinates = (location) => {
     }))
 };
 
+// Convert unix time to date time string
 const unixToDate = (unixTime) => {
     const date = moment.unix(unixTime).format("dddd MMMM Do, YYYY");
     return date;
 }
 
+// Function to render data on webpage
 const renderData = (weatherData) => {
 
 }
 
-getCoordinates("portland")
+// Event listener for for submission
+$("form").submit(function(event) {
+    event.preventDefault();
+    let location = $(".search-bar").val();
+    getCoordinates(location);
+});
