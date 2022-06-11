@@ -4,9 +4,118 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+    <title>Weather Dashboard</title>
+    
 </head>
 <body>
+    <header class=" d-flex justify-content-center">
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <main class="container-fluid">
+
+        <div class="row no-gutters d-flex justify-content-between">
+
+            <div class="col-3">
+                <div class="row">
+                    <form>
+                        <h2>Search For a City:</h2>
+                        <textarea class="search-bar" rows="1"></textarea>
+                        <button class="search-button">Search</button>
+                    </form>
+                </div>
+
+                <div class="row history">
+
+                </div>
+            </div>
+
+            <div class="col-9">
+                
+                <div class="row current-weather">
+                    <h2 class="current-weather-title"></h2>
+
+                    <p class="temp">Temp:</p>
+                    <p class="wind">Wind:</p>
+                    <p class="humidity">Humidity:</p>
+                    <p class="uvi">UV Index:</p>
+                </div>
+
+                <div class="row">
+                    <div class="row">
+                        <h2>5 day forcast</h2>
+                    </div>
+
+                    <div class="row justify-content-around">
+                        <div class="col-2 card" data-day="0">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+
+                                <p class="card-temp">Temp:</p>
+                                <p class="card-wind">Wind:</p>
+                                <p class="card-humidity">Humidity:</p>
+                            </div>
+                        </div>
+
+                        <div class="col-2 card" data-day="1">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+
+                                <p class="card-temp">Temp:</p>
+                                <p class="card-wind">Wind:</p>
+                                <p class="card-humidity">Humidity:</p>
+                            </div>
+                        </div>
+
+                        <div class="col-2 card" data-day="2">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+
+                                <p class="card-temp">Temp:</p>
+                                <p class="card-wind">Wind:</p>
+                                <p class="card-humidity">Humidity:</p>
+                            </div>
+                        </div>
+
+                        <div class="col-2 card" data-day="3">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+
+                                <p class="card-temp">Temp:</p>
+                                <p class="card-wind">Wind:</p>
+                                <p class="card-humidity">Humidity:</p>
+                            </div>
+                        </div>
+
+                        <div class="col-2 card" data-day="4">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+
+                                <p class="card-temp">Temp:</p>
+                                <p class="card-wind">Wind:</p>
+                                <p class="card-humidity">Humidity:</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script src="./assets/js/script.js"></script>
     
 </body>
 </html>
