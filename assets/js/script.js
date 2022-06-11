@@ -64,6 +64,8 @@ const renderData = (weatherData) => {
     for (let i = 0; i < weatherData.fiveDayForecast.length; i++) {
         let cardEl = $(`.card[data-day='${i}']`);
 
+        cardEl.children(".card-body").children(".card-title").text(`${unixToDate(weatherData.fiveDayForecast[i].dt)}`)
+
         cardEl.children(".card-body").children(".card-temp").text(`Temp: ${Math.round(weatherData.fiveDayForecast[i].temp.day)}° C`);
 
         cardEl.children(".card-body").children(".card-wind").text(`Wind: ${weatherData.fiveDayForecast[i].wind_speed}KM/H`);
