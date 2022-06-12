@@ -13,6 +13,9 @@ const currentWeatherEl = $(".current-weather");
 // History container element
 const historEl = $(".history");
 
+// Icon URL
+const iconUrl = "https://openweathermap.org/img/w/";
+
 // Search History array
 let searchHistory;
 
@@ -28,7 +31,8 @@ const getWeather = (coordinate) => {
                     wind: data.current.wind_speed,
                     humidity: data.current.humidity,
                     uvi: data.current.uvi,
-                    date: unixToDate(data.current.dt)
+                    date: unixToDate(data.current.dt),
+                    icon: data.current.weather[0].icon
                 },
                 fiveDayForecast: [data.daily[1], data.daily[2], data.daily[3], data.daily[4], data.daily[5]]
             };
@@ -67,12 +71,13 @@ const renderData = (weatherData) => {
     currentWeatherEl.children(".wind").text(`Wind: ${weatherData.current.wind} KM/H`);
     currentWeatherEl.children(".humidity").text(`Humidity: ${weatherData.current.humidity}%`);
     currentWeatherEl.children(".uvi").text(`UV Index: ${weatherData.current.uvi}`);
-    currentWeatherEl.children(".current-weather-title").text(`${searchBarEl.val().toUpperCase()} (${weatherData.current.date})`);
+    
+    currentWeatherEl.children(".current-weather-title").html(`${searchBarEl.val().toUpperCase()} (${weatherData.current.date}) <img src='${iconUrl}${weatherData.current.icon}.png' alt=''>`);
 
     for (let i = 0; i < weatherData.fiveDayForecast.length; i++) {
         let cardEl = $(`.card[data-day='${i}']`);
 
-        cardEl.children(".card-body").children(".card-title").text(`${unixToDate(weatherData.fiveDayForecast[i].dt)}`)
+        cardEl.children(".card-body").children(".card-title").html(`<h5>${unixToDate(weatherData.fiveDayForecast[i].dt)} <img src='${iconUrl}${weatherData.fiveDayForecast[i].weather[0].icon}.png' alt=''></h5>`)
 
         cardEl.children(".card-body").children(".card-temp").text(`Temp: ${Math.round(weatherData.fiveDayForecast[i].temp.day)}° C`);
 
@@ -120,7 +125,7 @@ const renderSearchHistory = () => {
     historEl.text("");
 
     searchHistory.forEach(search => {
-        historEl.append(`<p>${search}</p>`);
+        historEl.append(`<p class='rounded search-result'>${search}</p>`);
     })
 };
 
