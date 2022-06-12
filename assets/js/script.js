@@ -36,7 +36,7 @@ const getWeather = (coordinate) => {
 const getCoordinates = (location) => {
     let coordinate;
 
-    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${apiKey}`)
+    fetch(` https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${apiKey}`)
     .then(res => res.json()
     .then(data => {
         coordinate = {
