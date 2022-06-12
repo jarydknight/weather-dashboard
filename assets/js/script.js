@@ -122,7 +122,7 @@ const renderSearchHistory = () => {
     searchHistory.forEach(search => {
         historEl.append(`<p>${search}</p>`);
     })
-}
+};
 
 // Function call to updater header bg color
 updateHeaderBg();
@@ -146,4 +146,10 @@ $("form").submit(function(event) {
     event.preventDefault();
     let location = $(".search-bar").val();
     getCoordinates(location);
+});
+
+// Event listener for clicks on search history item
+historEl.on("click", "p", function(event) {
+    searchBarEl.val(event.target.innerText)
+    getCoordinates(event.target.innerText);
 });
