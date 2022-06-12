@@ -59,7 +59,7 @@ const renderData = (weatherData) => {
     currentWeatherEl.children(".wind").text(`Wind: ${weatherData.current.wind} KM/H`);
     currentWeatherEl.children(".humidity").text(`Humidity: ${weatherData.current.humidity}%`);
     currentWeatherEl.children(".uvi").text(`UV Index: ${weatherData.current.uvi}`);
-    currentWeatherEl.children(".current-weather-title").text(`${searchBarEl.val()} (${weatherData.current.date})`);
+    currentWeatherEl.children(".current-weather-title").text(`${searchBarEl.val().toUpperCase()} (${weatherData.current.date})`);
 
     for (let i = 0; i < weatherData.fiveDayForecast.length; i++) {
         let cardEl = $(`.card[data-day='${i}']`);
@@ -73,6 +73,34 @@ const renderData = (weatherData) => {
         cardEl.children(".card-body").children(".card-humidity").text(`Humidity: ${weatherData.fiveDayForecast[i].humidity}%`);
     }
 }
+
+const updateHeaderBg = () => {
+    const currentTime = Number(moment().format("H"));
+    
+    if (currentTime >= 6 && currentTime <= 10) {
+        $("header").addClass("morning");
+    }
+    else if (currentTime >= 11 && currentTime <= 17) {
+        $("header").addClass("day");
+    }
+    else if (currentTime >= 18 && currentTime <= 20) {
+        $("header").addClass("evening");
+    }
+    else {
+        $("header").addClass("night");
+    }
+};
+
+updateHeaderBg();
+// time delays: delay is for an hour, delayToNextHour calculates the delay to the next hour
+const delay = 60 * 60 * 1000;
+const delayToNextHour = (60 - parseInt(moment().format("LT").slice(3))) * 60000;
+
+// Audit's time squares every hour. First calculate delay to the next hour with set timeout then run every hour with set interval
+setTimeout(function() {
+    changeBgColor();
+    setInterval(updateHeaderBg, delay);
+}, delayToNextHour);
 
 // Event listener for for submission
 $("form").submit(function(event) {
