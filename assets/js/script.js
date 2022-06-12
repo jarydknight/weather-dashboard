@@ -10,6 +10,15 @@ const searchBarEl = $(".search-bar");
 // Current weather element
 const currentWeatherEl = $(".current-weather");
 
+// History container element
+const historEl = $(".history");
+
+// Icon URL
+const iconUrl = "https://openweathermap.org/img/w/";
+
+// Search History array
+let searchHistory;
+
 // Function to make API calls to get weather for location
 const getWeather = (coordinate) => {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinate.lat}&lon=${coordinate.long}&units=metric&exclude=minutely,hourly,alerts&appid=${apiKey}`).then(res => {
@@ -22,12 +31,15 @@ const getWeather = (coordinate) => {
                     wind: data.current.wind_speed,
                     humidity: data.current.humidity,
                     uvi: data.current.uvi,
-                    date: unixToDate(data.current.dt)
+                    date: unixToDate(data.current.dt),
+                    icon: data.current.weather[0].icon
                 },
                 fiveDayForecast: [data.daily[1], data.daily[2], data.daily[3], data.daily[4], data.daily[5]]
             };
             console.log(weatherData);
             renderData(weatherData);
+            saveHistory();
+            renderSearchHistory();
         })
     })
 }
@@ -58,13 +70,15 @@ const renderData = (weatherData) => {
     currentWeatherEl.children(".temp").text(`Temp: ${weatherData.current.temp}° C`);
     currentWeatherEl.children(".wind").text(`Wind: ${weatherData.current.wind} KM/H`);
     currentWeatherEl.children(".humidity").text(`Humidity: ${weatherData.current.humidity}%`);
-    currentWeatherEl.children(".uvi").text(`UV Index: ${weatherData.current.uvi}`);
-    currentWeatherEl.children(".current-weather-title").text(`${searchBarEl.val().toUpperCase()} (${weatherData.current.date})`);
+    currentWeatherEl.children(".uvi").html(`UV Index: <span>${weatherData.current.uvi}</span>`);
+    setUviColor(weatherData.current.uvi);
+    
+    currentWeatherEl.children(".current-weather-title").html(`${searchBarEl.val().toUpperCase()} (${weatherData.current.date}) <img src='${iconUrl}${weatherData.current.icon}.png' alt=''>`);
 
     for (let i = 0; i < weatherData.fiveDayForecast.length; i++) {
         let cardEl = $(`.card[data-day='${i}']`);
 
-        cardEl.children(".card-body").children(".card-title").text(`${unixToDate(weatherData.fiveDayForecast[i].dt)}`)
+        cardEl.children(".card-body").children(".card-title").html(`<h5>${unixToDate(weatherData.fiveDayForecast[i].dt)} <img src='${iconUrl}${weatherData.fiveDayForecast[i].weather[0].icon}.png' alt=''></h5>`)
 
         cardEl.children(".card-body").children(".card-temp").text(`Temp: ${Math.round(weatherData.fiveDayForecast[i].temp.day)}° C`);
 
@@ -91,7 +105,53 @@ const updateHeaderBg = () => {
     }
 };
 
+const getHistory = () => {
+    if(!localStorage.getItem("weather-search-history")) {
+        searchHistory = [];
+    }
+    else {
+        searchHistory = JSON.parse(localStorage.getItem("weather-search-history"));
+    }
+};
+
+const saveHistory = () => {
+    if (!searchHistory.includes(searchBarEl.val().toUpperCase().trim())) {
+        searchHistory.push(searchBarEl.val().toUpperCase().trim());
+
+        localStorage.setItem("weather-search-history", JSON.stringify(searchHistory))
+    }
+};
+
+const renderSearchHistory = () => {
+    historEl.text("");
+
+    searchHistory.forEach(search => {
+        historEl.append(`<p class='rounded search-result'>${search}</p>`);
+    })
+};
+
+const setUviColor = (uvi) => {
+    if (uvi <= 2 ) {
+        currentWeatherEl.children(".uvi").children("span").addClass("green");
+    }
+    else if (uvi > 2 && uvi <= 5) {
+        currentWeatherEl.children(".uvi").children("span").addClass("yellow");
+    }
+    else if (uvi > 5 && uvi <= 7) {
+        currentWeatherEl.children(".uvi").children("span").addClass("orange");
+    }
+    else {
+        currentWeatherEl.children(".uvi").children("span").addClass("red")
+    }
+}
+
+// Function call to updater header bg color
 updateHeaderBg();
+
+// Function call to retrieve search history from local storage and render it
+getHistory();
+renderSearchHistory();
+
 // time delays: delay is for an hour, delayToNextHour calculates the delay to the next hour
 const delay = 60 * 60 * 1000;
 const delayToNextHour = (60 - parseInt(moment().format("LT").slice(3))) * 60000;
@@ -107,4 +167,18 @@ $("form").submit(function(event) {
     event.preventDefault();
     let location = $(".search-bar").val();
     getCoordinates(location);
+});
+
+// Event listener for "Enter" keypress on serchBarEl to so that form is submitted and new line is not created
+searchBarEl.keypress(e => {
+    if (e.which === 13) {
+        e.preventDefault();
+        $("form").submit();
+    }
+})
+
+// Event listener for clicks on search history item
+historEl.on("click", "p", function(event) {
+    searchBarEl.val(event.target.innerText)
+    getCoordinates(event.target.innerText);
 });

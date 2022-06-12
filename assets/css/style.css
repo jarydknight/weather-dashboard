@@ -1,5 +1,9 @@
 /* || PAGE STYLES */
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 textarea {
     resize: none;
 
@@ -26,7 +30,7 @@ header h1 {
     background: linear-gradient(to right, #0ED2F7, #B2FEFA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.afternoon {
+.day {
     background: #56CCF2;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -43,3 +47,69 @@ header h1 {
     background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+.search-result {
+    background-color: aliceblue;
+}
+
+.search-result:hover {
+    cursor: pointer;
+    background-color: gainsboro;
+}
+         
+.search-button {
+    background-image: linear-gradient(to right, #003973 0%, #E5E5BE  51%, #003973  100%);
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    border-width: 2px;
+  }
+
+  .search-button:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+  }
+
+.search-bar {
+    border-width: 2px;
+}
+
+.card {
+    margin-bottom: 5px;
+}
+
+.card-body {
+    padding: 16px 0;
+}
+
+.uvi span {
+    border-radius: 20%;
+
+    padding: 2px;
+}
+
+.green {
+    background-color: #378b29;
+    background-image: linear-gradient(315deg, #378b29 0%, #74d680 74%);
+}
+
+.yellow {
+    background-color: #fff293;
+    background-image: linear-gradient(315deg, #fff293 0%, #ffe884 74%);
+}
+
+.orange {
+    background-color: #fbb034;
+    background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
+}
+
+.red {
+    background-color: #990000;
+    background-image: linear-gradient(147deg, #990000 0%, #ff0000 74%);
+}
+
