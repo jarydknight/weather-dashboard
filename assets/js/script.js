@@ -10,6 +10,12 @@ const searchBarEl = $(".search-bar");
 // Current weather element
 const currentWeatherEl = $(".current-weather");
 
+// History container element
+const historEl = $(".history");
+
+// Search History array
+let searchHistory;
+
 // Function to make API calls to get weather for location
 const getWeather = (coordinate) => {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coordinate.lat}&lon=${coordinate.long}&units=metric&exclude=minutely,hourly,alerts&appid=${apiKey}`).then(res => {
@@ -28,6 +34,8 @@ const getWeather = (coordinate) => {
             };
             console.log(weatherData);
             renderData(weatherData);
+            saveHistory();
+            renderSearchHistory();
         })
     })
 }
@@ -91,7 +99,38 @@ const updateHeaderBg = () => {
     }
 };
 
+const getHistory = () => {
+    if(!localStorage.getItem("weather-search-history")) {
+        searchHistory = [];
+    }
+    else {
+        searchHistory = JSON.parse(localStorage.getItem("weather-search-history"));
+    }
+};
+
+const saveHistory = () => {
+    if (!searchHistory.includes(searchBarEl.val().toUpperCase())) {
+        searchHistory.push(searchBarEl.val().toUpperCase());
+
+        localStorage.setItem("weather-search-history", JSON.stringify(searchHistory))
+    }
+};
+
+const renderSearchHistory = () => {
+    historEl.text("");
+
+    searchHistory.forEach(search => {
+        historEl.append(`<p>${search}</p>`);
+    })
+}
+
+// Function call to updater header bg color
 updateHeaderBg();
+
+// Function call to retrieve search history from local storage and render it
+getHistory();
+renderSearchHistory();
+
 // time delays: delay is for an hour, delayToNextHour calculates the delay to the next hour
 const delay = 60 * 60 * 1000;
 const delayToNextHour = (60 - parseInt(moment().format("LT").slice(3))) * 60000;
