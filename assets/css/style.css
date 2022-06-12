@@ -86,3 +86,30 @@ header h1 {
 .card-body {
     padding: 16px 0;
 }
+
+.uvi span {
+    border-radius: 20%;
+
+    padding: 2px;
+}
+
+.green {
+    background-color: #378b29;
+    background-image: linear-gradient(315deg, #378b29 0%, #74d680 74%);
+}
+
+.yellow {
+    background-color: #fff293;
+    background-image: linear-gradient(315deg, #fff293 0%, #ffe884 74%);
+}
+
+.orange {
+    background-color: #fbb034;
+    background-image: linear-gradient(315deg, #fbb034 0%, #ffdd00 74%);
+}
+
+.red {
+    background-color: #990000;
+    background-image: linear-gradient(147deg, #990000 0%, #ff0000 74%);
+}
+

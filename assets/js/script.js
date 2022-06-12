@@ -70,7 +70,8 @@ const renderData = (weatherData) => {
     currentWeatherEl.children(".temp").text(`Temp: ${weatherData.current.temp}° C`);
     currentWeatherEl.children(".wind").text(`Wind: ${weatherData.current.wind} KM/H`);
     currentWeatherEl.children(".humidity").text(`Humidity: ${weatherData.current.humidity}%`);
-    currentWeatherEl.children(".uvi").text(`UV Index: ${weatherData.current.uvi}`);
+    currentWeatherEl.children(".uvi").html(`UV Index: <span>${weatherData.current.uvi}</span>`);
+    setUviColor(weatherData.current.uvi);
     
     currentWeatherEl.children(".current-weather-title").html(`${searchBarEl.val().toUpperCase()} (${weatherData.current.date}) <img src='${iconUrl}${weatherData.current.icon}.png' alt=''>`);
 
@@ -114,8 +115,8 @@ const getHistory = () => {
 };
 
 const saveHistory = () => {
-    if (!searchHistory.includes(searchBarEl.val().toUpperCase())) {
-        searchHistory.push(searchBarEl.val().toUpperCase());
+    if (!searchHistory.includes(searchBarEl.val().toUpperCase().trim())) {
+        searchHistory.push(searchBarEl.val().toUpperCase().trim());
 
         localStorage.setItem("weather-search-history", JSON.stringify(searchHistory))
     }
@@ -128,6 +129,21 @@ const renderSearchHistory = () => {
         historEl.append(`<p class='rounded search-result'>${search}</p>`);
     })
 };
+
+const setUviColor = (uvi) => {
+    if (uvi <= 2 ) {
+        currentWeatherEl.children(".uvi").children("span").addClass("green");
+    }
+    else if (uvi > 2 && uvi <= 5) {
+        currentWeatherEl.children(".uvi").children("span").addClass("yellow");
+    }
+    else if (uvi > 5 && uvi <= 7) {
+        currentWeatherEl.children(".uvi").children("span").addClass("orange");
+    }
+    else {
+        currentWeatherEl.children(".uvi").children("span").addClass("red")
+    }
+}
 
 // Function call to updater header bg color
 updateHeaderBg();
@@ -152,6 +168,14 @@ $("form").submit(function(event) {
     let location = $(".search-bar").val();
     getCoordinates(location);
 });
+
+// Event listener for "Enter" keypress on serchBarEl to so that form is submitted and new line is not created
+searchBarEl.keypress(e => {
+    if (e.which === 13) {
+        e.preventDefault();
+        $("form").submit();
+    }
+})
 
 // Event listener for clicks on search history item
 historEl.on("click", "p", function(event) {
