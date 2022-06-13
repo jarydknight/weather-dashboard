@@ -158,7 +158,7 @@ const delayToNextHour = (60 - parseInt(moment().format("LT").slice(3))) * 60000;
 
 // Audit's time squares every hour. First calculate delay to the next hour with set timeout then run every hour with set interval
 setTimeout(function() {
-    changeBgColor();
+    updateHeaderBg();
     setInterval(updateHeaderBg, delay);
 }, delayToNextHour);
 

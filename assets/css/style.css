@@ -113,3 +113,9 @@ header h1 {
     background-image: linear-gradient(147deg, #990000 0%, #ff0000 74%);
 }
 
+@media screen and (max-width: 768px) {
+    .history {
+        height: 200px;
+        overflow: auto;
+    }
+}
