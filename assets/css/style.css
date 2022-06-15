@@ -16,6 +16,10 @@ textarea {
     width: 100%;
 }
 
+.clear-history-button {
+    width: 100%;
+}
+
 header {
     color: white;
 }
@@ -69,7 +73,7 @@ header h1 {
     border-width: 2px;
   }
 
-  .search-button:hover {
+.search-button:hover {
     background-position: right center; /* change the direction of the change here */
     color: #fff;
     text-decoration: none;
@@ -77,6 +81,24 @@ header h1 {
 
 .search-bar {
     border-width: 2px;
+}
+
+.clear-history-button {
+    background-image: linear-gradient(to right, #003973 0%, #E5E5BE  51%, #003973  100%);
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    border-width: 2px;
+}
+
+.clear-history-button:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
 }
 
 .card {
