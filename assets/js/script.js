@@ -132,6 +132,11 @@ const renderSearchHistory = () => {
     })
 };
 
+const clearHistory = () => {
+    localStorage.clear("weather-search-history");
+    searchHistory = [];
+}
+
 const setUviColor = (uvi) => {
     if (uvi <= 2 ) {
         currentWeatherEl.children(".uvi").children("span").addClass("green");
@@ -163,18 +168,28 @@ setTimeout(function() {
     setInterval(updateHeaderBg, delay);
 }, delayToNextHour);
 
-// Event listener for for submission
-$("form").submit(function(event) {
+// Event Listener for click on search button
+$("form").on("click", ".search-button", function(event) {
     event.preventDefault();
     let location = $(".search-bar").val();
     getCoordinates(location);
-});
+})
+
+// Event listener for click on clear hisotry button
+$("form").on("click", ".clear-history-button", function(event) {
+    event.preventDefault();
+    clearHistory();
+    renderSearchHistory();
+})
+
 
 // Event listener for "Enter" keypress on serchBarEl to so that form is submitted and new line is not created
 searchBarEl.keypress(e => {
     if (e.which === 13) {
         e.preventDefault();
-        $("form").submit();
+        // $("form").submit();
+        let location = $(".search-bar").val();
+        getCoordinates(location);
     }
 })
 
