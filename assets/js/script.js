@@ -69,6 +69,7 @@ const unixToDate = (unixTime) => {
 
 // Function to render data on webpage
 const renderData = (weatherData) => {
+    // Block of code below renders data for current weather
     currentWeatherEl.children(".temp").text(`Temp: ${weatherData.current.temp}° C`);
     currentWeatherEl.children(".wind").text(`Wind: ${weatherData.current.wind} KM/H`);
     currentWeatherEl.children(".humidity").text(`Humidity: ${weatherData.current.humidity}%`);
@@ -77,6 +78,7 @@ const renderData = (weatherData) => {
     
     currentWeatherEl.children(".current-weather-title").html(`${searchBarEl.val().toUpperCase()} (${weatherData.current.date}) <img src='${iconUrl}${weatherData.current.icon}.png' alt=''>`);
 
+    // Render data for five day forcast
     for (let i = 0; i < weatherData.fiveDayForecast.length; i++) {
         let cardEl = $(`.card[data-day='${i}']`);
 
@@ -90,6 +92,7 @@ const renderData = (weatherData) => {
     }
 }
 
+// Function to update the header background
 const updateHeaderBg = () => {
     const currentTime = Number(moment().format("H"));
     
@@ -107,6 +110,7 @@ const updateHeaderBg = () => {
     }
 };
 
+// Function to get history from local storage
 const getHistory = () => {
     if(!localStorage.getItem("weather-search-history")) {
         searchHistory = [];
@@ -116,6 +120,7 @@ const getHistory = () => {
     }
 };
 
+// Function to save history
 const saveHistory = () => {
     if (!searchHistory.includes(searchBarEl.val().toUpperCase().trim())) {
         searchHistory.push(searchBarEl.val().toUpperCase().trim());
@@ -124,6 +129,7 @@ const saveHistory = () => {
     }
 };
 
+// Function to render history on page
 const renderSearchHistory = () => {
     historEl.text("");
 
@@ -132,11 +138,13 @@ const renderSearchHistory = () => {
     })
 };
 
+// Function to clear history from local storage and history array
 const clearHistory = () => {
     localStorage.clear("weather-search-history");
     searchHistory = [];
 }
 
+// Function to set color of span based on UVI 
 const setUviColor = (uvi) => {
     if (uvi <= 2 ) {
         currentWeatherEl.children(".uvi").children("span").addClass("green");
@@ -181,7 +189,6 @@ $("form").on("click", ".clear-history-button", function(event) {
     clearHistory();
     renderSearchHistory();
 })
-
 
 // Event listener for "Enter" keypress on serchBarEl to so that form is submitted and new line is not created
 searchBarEl.keypress(e => {
