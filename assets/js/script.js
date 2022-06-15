@@ -36,7 +36,6 @@ const getWeather = (coordinate) => {
                 },
                 fiveDayForecast: [data.daily[1], data.daily[2], data.daily[3], data.daily[4], data.daily[5]]
             };
-            console.log(weatherData);
             renderData(weatherData);
             saveHistory();
             renderSearchHistory();
@@ -44,7 +43,7 @@ const getWeather = (coordinate) => {
     })
 }
 
-// FUnction to make API calls to get coordinates for location
+// Function to make API calls to get coordinates for location
 const getCoordinates = (location) => {
     let coordinate;
 
@@ -57,6 +56,9 @@ const getCoordinates = (location) => {
         };
         getWeather(coordinate);
     }))
+    .catch(function (err) {
+        alert("Error: Please enter a valid city");
+    })
 };
 
 // Convert unix time to date time string
@@ -158,7 +160,6 @@ const delayToNextHour = (60 - parseInt(moment().format("LT").slice(3))) * 60000;
 
 // Audit's time squares every hour. First calculate delay to the next hour with set timeout then run every hour with set interval
 setTimeout(function() {
-    updateHeaderBg();
     setInterval(updateHeaderBg, delay);
 }, delayToNextHour);
 
